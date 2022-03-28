@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class CharacterPoolManager : MonoBehaviour
+public class CharacterPoolManager : Singleton<CharacterPoolManager>
 {
     [Serializable]
     public struct Character
@@ -33,16 +33,7 @@ public class CharacterPoolManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GetPlayer(false);
-        }else if (Input.GetKeyDown(KeyCode.S))
-        {
-            GetPlayer(true);
-        }
-    }
+    
 
     #region GetCaharcter Func
          /// <summary>
@@ -50,8 +41,9 @@ public class CharacterPoolManager : MonoBehaviour
     /// </summary>
     /// <param name="bigPlayer"> check object type </param>
     /// <returns></returns>
-    public GameObject GetPlayer(bool bigPlayer)
+    public GameObject GetPlayer(bool bigPlayer,Transform position)
     {
+        
         GameObject player = null;
         int index;
         if (!bigPlayer)
@@ -66,7 +58,7 @@ public class CharacterPoolManager : MonoBehaviour
         }
 
         player.SetActive(true);
-        player.transform.position = GameManager.Instance.forcePoint.position;
+        player.transform.position = position.position;
         player.GetComponent<Rigidbody>().AddForce(Vector3.forward * GameManager.Instance.forceSpeedForPlayer);
         characters[index].queue.Enqueue(player);
         return player;

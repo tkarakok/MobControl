@@ -7,6 +7,7 @@ public class CharacterSettings : ScriptableObject
 {
     public int totalTrigger;
     public ChracterType chracterType;
+    public bool big;
 }
 
 
