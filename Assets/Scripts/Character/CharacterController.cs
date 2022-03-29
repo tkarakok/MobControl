@@ -54,9 +54,10 @@ public class CharacterController : MonoBehaviour
             transform.localScale -= new Vector3(.1f, .1f, .1f);
         }
     }
+    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Obstacle"))
+        if (other.CompareTag("Obstacle") && characterSettings.chracterType == ChracterType.player)
         {
             for (int i = 1; i < other.GetComponent<Obstacle>().value; i++)
             {
@@ -64,6 +65,7 @@ public class CharacterController : MonoBehaviour
             }
         }
     }
+
     private void OnCollisionEnter(Collision other)
     {
         if (characterSettings.chracterType == ChracterType.player)
@@ -72,13 +74,17 @@ public class CharacterController : MonoBehaviour
             {
                 CheckCollision();
             }
-
         }
         else
         {
             if (other.gameObject.CompareTag("Player"))
             {
                 CheckCollision();
+            }
+            else if (other.gameObject.CompareTag("Cannon"))
+            {
+                gameObject.SetActive(false);
+                Debug.Log("gameover");
             }
         }
 
