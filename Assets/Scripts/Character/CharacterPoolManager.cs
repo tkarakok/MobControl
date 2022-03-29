@@ -70,7 +70,7 @@ public class CharacterPoolManager : Singleton<CharacterPoolManager>
     /// </summary>
     /// <param name="bigEnemy"> check object type </param>
     /// <returns></returns>
-    public GameObject GetEnemy(bool bigEnemy){
+    public GameObject GetEnemy(bool bigEnemy, Transform position){
         GameObject enemy = null;
         int index;
         if (!bigEnemy)
@@ -85,8 +85,8 @@ public class CharacterPoolManager : Singleton<CharacterPoolManager>
         }
 
         enemy.SetActive(true);
-        enemy.transform.position = GameManager.Instance.forcePoint.position;
-        enemy.GetComponent<Rigidbody>().AddForce(Vector3.forward * GameManager.Instance.forceSpeedForPlayer);
+        enemy.transform.position = position.position;
+        enemy.GetComponent<Rigidbody>().AddForce(Vector3.back * GameManager.Instance.forceSpeedForPlayer);
         characters[index].queue.Enqueue(enemy);
         return enemy;
     }

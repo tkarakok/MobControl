@@ -54,7 +54,7 @@ public class CharacterController : MonoBehaviour
             transform.localScale -= new Vector3(.1f, .1f, .1f);
         }
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Obstacle") && characterSettings.chracterType == ChracterType.player)
@@ -74,6 +74,7 @@ public class CharacterController : MonoBehaviour
             {
                 CheckCollision();
             }
+
         }
         else
         {
@@ -85,6 +86,18 @@ public class CharacterController : MonoBehaviour
             {
                 gameObject.SetActive(false);
                 Debug.Log("gameover");
+            }
+        }
+
+    }
+    
+    private void OnCollisionStay(Collision other)
+    {
+        if (characterSettings.chracterType == ChracterType.player)
+        {
+            if (other.gameObject.CompareTag("Tower"))
+            {
+                other.gameObject.GetComponent<TowerController>().CheckHealth();
             }
         }
 

@@ -20,6 +20,7 @@ public class GameManager : Singleton<GameManager>
     public void CurrentTarget()
     {
         Target = targets[_currentTarget];
+        Target.GetComponent<TowerController>().enabled = true;
     }
 
     public void ChangeTarget()

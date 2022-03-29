@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Obstacle
   - Cannon
+  - Tower
   layers:
   - Default
   - TransparentFX

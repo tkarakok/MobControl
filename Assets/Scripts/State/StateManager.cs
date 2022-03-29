@@ -14,6 +14,6 @@ public class StateManager : Singleton<StateManager>
     public State state;
 
     private void Start() {
-        state = State.MainMenu;
+        state = State.InGame;
     }
 }

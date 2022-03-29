@@ -1588,7 +1588,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6910270373489094992}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 0.846, y: 0, z: 16.17}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children:
@@ -1596,7 +1596,7 @@ Transform:
   - {fileID: 6910270372225655251}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!95 &6910270373489094999
 Animator:
   serializedVersion: 3
@@ -1640,9 +1640,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 5.0098085
+  m_Height: 4.545267
   m_Direction: 1
-  m_Center: {x: 0, y: 2.0049036, z: 0}
+  m_Center: {x: 0, y: 2.2371755, z: 0}
 --- !u!195 &4601204007235646694
 NavMeshAgent:
   m_ObjectHideFlags: 0
