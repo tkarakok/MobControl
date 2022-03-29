@@ -17,21 +17,29 @@ public class CannonController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (StateManager.Instance.state == State.InGame)
         {
-            // check boost value and if boost value equals max value we instantiate big alias player
-            if (CheckBoostForCannon())
+            if (Input.GetMouseButtonDown(0))
             {
-                CharacterPoolManager.Instance.GetPlayer(true, GameManager.Instance.forcePoint);
-                ResetBoostImageAmount();
+                // check boost value and if boost value equals max value we instantiate big alias player
+                if (CheckBoostForCannon())
+                {
+                    CharacterPoolManager.Instance.GetPlayer(true, GameManager.Instance.forcePoint);
+                    ResetBoostImageAmount();
+                }
+                else
+                {
+                    CharacterPoolManager.Instance.GetPlayer(false, GameManager.Instance.forcePoint);
+                    cannonBoostImage.fillAmount += .05f;
+                }
+                AnimateWave();
             }
-            else
+            else if (Input.GetKeyDown(KeyCode.Space))
             {
-                CharacterPoolManager.Instance.GetPlayer(false, GameManager.Instance.forcePoint);
-                cannonBoostImage.fillAmount += .05f;
+                GameManager.Instance.ChangeTarget();
             }
-            AnimateWave();
         }
+
 
     }
 

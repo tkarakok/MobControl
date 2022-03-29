@@ -8,7 +8,6 @@ public class CharacterController : MonoBehaviour
     public CharacterSettings characterSettings;
 
     int _triggerCounter;
-    Transform _target;
     NavMeshAgent _agent;
 
 
@@ -16,26 +15,28 @@ public class CharacterController : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         _triggerCounter = characterSettings.totalTrigger;
-        CheckTarget();
     }
 
     // Update is called once per frame
     void Update()
     {
-        _agent.SetDestination(_target.transform.position);
+        if (StateManager.Instance.state == State.InGame)
+        {
+            _agent.SetDestination(CheckTarget().position);
+        }
     }
 
 
     #region Target Check
-    public void CheckTarget()
+    public Transform CheckTarget()
     {
         if (characterSettings.chracterType == ChracterType.player)
         {
-            _target = GameManager.Instance.targets[0];
+            return GameManager.Instance.Target;
         }
         else
         {
-            _target = GameManager.Instance.cannon;
+            return GameManager.Instance.cannon;
         }
     }
     #endregion
