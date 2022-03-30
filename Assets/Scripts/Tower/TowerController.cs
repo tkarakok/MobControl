@@ -25,8 +25,11 @@ public class TowerController : MonoBehaviour
     public void CheckHealth(){
         health--;
         healthText.text = health.ToString();
-        if (health == 0)
+        if (health <= 0)
         {
+            GameManager.Instance.ActiveAllCharactersDestroy();
+            CannonController.Instance.ChangeCannonPosition();
+            GameManager.Instance.ChangeTarget();
             gameObject.SetActive(false);
         }
     }
@@ -34,7 +37,7 @@ public class TowerController : MonoBehaviour
     IEnumerator StartInstantiateEnemy(){
         while (gameObject.activeInHierarchy)
         {
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(enemyInstantiateSpeed);
             for (int i = 0; i < smallEnemyCount; i++)
             {
                 CharacterPoolManager.Instance.GetEnemy(false,enemySpawnPoint);
@@ -43,7 +46,6 @@ public class TowerController : MonoBehaviour
             {
                 CharacterPoolManager.Instance.GetEnemy(true,enemySpawnPoint);
             }
-            yield return new WaitForSeconds(enemyInstantiateSpeed);
         }
     }
 

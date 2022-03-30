@@ -33,18 +33,18 @@ public class CharacterPoolManager : Singleton<CharacterPoolManager>
         }
     }
 
-    
+
 
     #region GetCaharcter Func
-         /// <summary>
+    /// <summary>
     /// get object for battle in queue
     /// </summary>
     /// <param name="bigPlayer"> check object type </param>
     /// <returns></returns>
-    public GameObject GetPlayer(bool bigPlayer,Transform position)
+    public GameObject GetPlayer(bool bigPlayer, Transform position)
     {
-        
-        GameObject player = null;
+
+        GameObject player;
         int index;
         if (!bigPlayer)
         {
@@ -61,6 +61,7 @@ public class CharacterPoolManager : Singleton<CharacterPoolManager>
         player.transform.position = position.position;
         player.GetComponent<Rigidbody>().AddForce(Vector3.forward * GameManager.Instance.forceSpeedForPlayer);
         characters[index].queue.Enqueue(player);
+        GameManager.Instance.ActiveCharacters.Add(player);
         return player;
     }
 
@@ -70,8 +71,9 @@ public class CharacterPoolManager : Singleton<CharacterPoolManager>
     /// </summary>
     /// <param name="bigEnemy"> check object type </param>
     /// <returns></returns>
-    public GameObject GetEnemy(bool bigEnemy, Transform position){
-        GameObject enemy = null;
+    public GameObject GetEnemy(bool bigEnemy, Transform position)
+    {
+        GameObject enemy;
         int index;
         if (!bigEnemy)
         {
@@ -83,15 +85,15 @@ public class CharacterPoolManager : Singleton<CharacterPoolManager>
             enemy = characters[3].queue.Dequeue();
             index = 3;
         }
-
         enemy.SetActive(true);
         enemy.transform.position = position.position;
         enemy.GetComponent<Rigidbody>().AddForce(Vector3.back * GameManager.Instance.forceSpeedForPlayer);
         characters[index].queue.Enqueue(enemy);
+        GameManager.Instance.ActiveCharacters.Add(enemy);
         return enemy;
     }
     #endregion
-   
+
 
 
 }

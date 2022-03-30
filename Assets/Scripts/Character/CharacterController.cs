@@ -47,7 +47,7 @@ public class CharacterController : MonoBehaviour
         _triggerCounter--;
         if (_triggerCounter == 0)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         else
         {
@@ -98,6 +98,7 @@ public class CharacterController : MonoBehaviour
             if (other.gameObject.CompareTag("Tower"))
             {
                 other.gameObject.GetComponent<TowerController>().CheckHealth();
+                gameObject.SetActive(false);
             }
         }
 
