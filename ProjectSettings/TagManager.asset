@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - Cannon
   - Tower
+  - Destination
   layers:
   - Default
   - TransparentFX

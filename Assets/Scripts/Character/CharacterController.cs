@@ -9,23 +9,35 @@ public class CharacterController : MonoBehaviour
 
     int _triggerCounter;
     NavMeshAgent _agent;
-
+    bool _activeDestination;
 
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _triggerCounter = characterSettings.totalTrigger;
+        _activeDestination = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (StateManager.Instance.state == State.InGame)
+        if (StateManager.Instance.state == State.InGame && gameObject.activeInHierarchy)
         {
-            _agent.SetDestination(CheckTarget().position);
+            if (_activeDestination)
+            {
+                _agent.SetDestination(CheckTarget().position);
+            }
+            else
+            {
+                _agent.Move(FindWay() * Time.deltaTime * 2f);
+            }
         }
     }
 
+    void ResetAgent(){
+        transform.localScale = characterSettings.characterScale;
+        _activeDestination = false;
+    }
 
     #region Target Check
     public Transform CheckTarget()
@@ -40,6 +52,21 @@ public class CharacterController : MonoBehaviour
         }
     }
     #endregion
+
+    #region Find Way
+    public Vector3 FindWay()
+    {
+        if (characterSettings.chracterType == ChracterType.player)
+        {
+            return Vector3.forward;
+        }
+        else
+        {
+            return Vector3.back;
+        }
+    }
+    #endregion
+
 
     #region CollisionDetect
     void CheckCollision()
@@ -57,13 +84,21 @@ public class CharacterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Obstacle") && characterSettings.chracterType == ChracterType.player)
+        if (characterSettings.chracterType == ChracterType.player)
         {
-            for (int i = 1; i < other.GetComponent<Obstacle>().value; i++)
+            if (other.CompareTag("Obstacle"))
             {
-                CharacterPoolManager.Instance.GetPlayer(characterSettings.big, transform);
+                for (int i = 1; i < other.GetComponent<Obstacle>().value; i++)
+                {
+                    CharacterPoolManager.Instance.GetPlayer(characterSettings.big, transform);
+                }
+            }
+            else if (other.CompareTag("Destination"))
+            {
+                _activeDestination = true;
             }
         }
+
     }
 
     private void OnCollisionEnter(Collision other)
@@ -73,6 +108,7 @@ public class CharacterController : MonoBehaviour
             if (other.gameObject.CompareTag("Enemy"))
             {
                 CheckCollision();
+                ResetAgent();
             }
 
         }
@@ -80,17 +116,17 @@ public class CharacterController : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Player"))
             {
+                ResetAgent();
                 CheckCollision();
             }
             else if (other.gameObject.CompareTag("Cannon"))
             {
                 gameObject.SetActive(false);
-                Debug.Log("gameover");
             }
         }
 
     }
-    
+
     private void OnCollisionStay(Collision other)
     {
         if (characterSettings.chracterType == ChracterType.player)
@@ -98,6 +134,7 @@ public class CharacterController : MonoBehaviour
             if (other.gameObject.CompareTag("Tower"))
             {
                 other.gameObject.GetComponent<TowerController>().CheckHealth();
+                ResetAgent();
                 gameObject.SetActive(false);
             }
         }

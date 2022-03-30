@@ -13,38 +13,42 @@ public class TowerController : MonoBehaviour
     TextMeshPro healthText;
 
 
-    private void Start() {
+    private void Start()
+    {
         healthText = transform.GetChild(0).GetComponent<TextMeshPro>();
         healthText.text = health.ToString();
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         StartCoroutine(StartInstantiateEnemy());
     }
 
-    public void CheckHealth(){
+    public void CheckHealth()
+    {
         health--;
         healthText.text = health.ToString();
         if (health <= 0)
         {
+            CannonController.Instance.RotateCannonBody();
             GameManager.Instance.ActiveAllCharactersDestroy();
-            CannonController.Instance.ChangeCannonPosition();
-            GameManager.Instance.ChangeTarget();
             gameObject.SetActive(false);
         }
     }
 
-    IEnumerator StartInstantiateEnemy(){
+
+    IEnumerator StartInstantiateEnemy()
+    {
         while (gameObject.activeInHierarchy)
         {
             yield return new WaitForSeconds(enemyInstantiateSpeed);
             for (int i = 0; i < smallEnemyCount; i++)
             {
-                CharacterPoolManager.Instance.GetEnemy(false,enemySpawnPoint);
+                CharacterPoolManager.Instance.GetEnemy(false, enemySpawnPoint);
             }
             for (int i = 0; i < bigEnemyCount; i++)
             {
-                CharacterPoolManager.Instance.GetEnemy(true,enemySpawnPoint);
+                CharacterPoolManager.Instance.GetEnemy(true, enemySpawnPoint);
             }
         }
     }

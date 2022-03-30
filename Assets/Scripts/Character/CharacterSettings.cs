@@ -8,6 +8,7 @@ public class CharacterSettings : ScriptableObject
     public int totalTrigger;
     public ChracterType chracterType;
     public bool big;
+    public Vector3 characterScale;
 }
 
 

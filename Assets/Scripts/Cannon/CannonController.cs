@@ -9,16 +9,16 @@ public class CannonController : Singleton<CannonController>
     public Transform animatedObject, targetPoint, backPoint;
     public Image cannonBoostImage;
     public List<Transform> cannonPoints;
-
+    public GameObject cannonBody;
 
     private float _timer;
     private float _xSpeed = 25;
-    private int _currentCannonPosition = 0;
+    private int _currentCannonPosition = -1;
 
     private void Start()
     {
         ResetBoostImageAmount();
-        MoveNewCannonPosition();
+        RotateCannonBody();
     }
 
     private void Update()
@@ -37,7 +37,7 @@ public class CannonController : Singleton<CannonController>
                 _newX = Mathf.Clamp(_newX, -3, 3);
                 transform.position = new Vector3(_newX, transform.position.y, transform.position.z);
 
-                if (_timer >= .2f)
+                if (_timer >= .35f)
                 {
                     _timer = 0;
                     // check boost value and if boost value equals max value we instantiate big alias player
@@ -89,7 +89,7 @@ public class CannonController : Singleton<CannonController>
     #region CANNON POSİTİON
     public void MoveNewCannonPosition()
     {
-        StateManager.Instance.state = State.CannonMove;
+        _currentCannonPosition++;
         if (_currentCannonPosition <= cannonPoints.Count)
         {
             transform.DOMove(cannonPoints[_currentCannonPosition].position, 2).OnComplete(
@@ -97,15 +97,17 @@ public class CannonController : Singleton<CannonController>
                 {
                     StateManager.Instance.state = State.InGame;
                     GameManager.Instance.ChangeTarget();
+                    cannonBody.transform.DORotate(new Vector3(0,90,0),.5f);
                 }
             );
         }
     }
 
-    public void ChangeCannonPosition()
-    {
-        _currentCannonPosition++;
-        MoveNewCannonPosition();
+    
+
+    public void RotateCannonBody(){
+        StateManager.Instance.state = State.CannonMove;
+        cannonBody.transform.DORotate(new Vector3(0,0,0),.5f).OnComplete(MoveNewCannonPosition);
     }
     #endregion
 }
