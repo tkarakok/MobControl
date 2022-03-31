@@ -15,4 +15,4 @@ MonoBehaviour:
   totalTrigger: 3
   chracterType: 0
   big: 1
-  characterScale: {x: 0.4, y: 0.4, z: 0.4}
+  characterScale: {x: 0.5, y: 0.5, z: 0.5}

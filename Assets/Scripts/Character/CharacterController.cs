@@ -15,7 +15,7 @@ public class CharacterController : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         _triggerCounter = characterSettings.totalTrigger;
-        _activeDestination = false;
+        ResetAgent();
     }
 
     // Update is called once per frame
@@ -122,6 +122,7 @@ public class CharacterController : MonoBehaviour
             else if (other.gameObject.CompareTag("Cannon"))
             {
                 gameObject.SetActive(false);
+                EventManager.Instance.GameOver();
             }
         }
 

@@ -30,9 +30,15 @@ public class TowerController : MonoBehaviour
         healthText.text = health.ToString();
         if (health <= 0)
         {
-            CannonController.Instance.RotateCannonBody();
-            GameManager.Instance.ActiveAllCharactersDestroy();
-            gameObject.SetActive(false);
+            if (GameManager.Instance.CheckGameOver())
+            {
+                EventManager.Instance.EndGame();
+            }
+            else
+            {
+                EventManager.Instance.CannonMove();
+                gameObject.SetActive(false);
+            }
         }
     }
 

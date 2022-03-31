@@ -6,7 +6,6 @@ using DG.Tweening;
 public class GameManager : Singleton<GameManager>
 {
     public List<Transform> targets;
-    public GameObject[] towers;
     public Transform cannon, forcePoint;
     public float forceSpeedForPlayer;
 
@@ -18,26 +17,37 @@ public class GameManager : Singleton<GameManager>
     #region Capsullation
     public Transform Target { get => _target; set => _target = value; }
     public List<GameObject> ActiveCharacters { get => activeCharacters; set => activeCharacters = value; }
+    public int CurrentTarget { get => _currentTarget; set => _currentTarget = value; }
     #endregion
 
+    #region Check Game Over
+    public bool CheckGameOver()
+    {
+        if (CurrentTarget >= targets.Count - 1)
+        {
+            
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    #endregion
 
     #region AI TARGET
-    public void CurrentTarget()
+    public void FindCurrentTarget()
     {
-        Target = targets[_currentTarget];
+        Target = targets[CurrentTarget];
         Target.GetComponent<TowerController>().enabled = true;
     }
 
     public void ChangeTarget()
     {
-        _currentTarget++;
-        if (_currentTarget <= targets.Count)
+        CurrentTarget++;
+        if (CurrentTarget <= targets.Count)
         {
-            CurrentTarget();
-        }
-        else
-        {
-            Debug.Log("END GAME");
+            FindCurrentTarget();
         }
 
     }

@@ -18,7 +18,7 @@ public class CannonController : Singleton<CannonController>
     private void Start()
     {
         ResetBoostImageAmount();
-        RotateCannonBody();
+        EventManager.Instance.CannonMove();
     }
 
     private void Update()
@@ -106,7 +106,7 @@ public class CannonController : Singleton<CannonController>
     
 
     public void RotateCannonBody(){
-        StateManager.Instance.state = State.CannonMove;
+    
         cannonBody.transform.DORotate(new Vector3(0,0,0),.5f).OnComplete(MoveNewCannonPosition);
     }
     #endregion
