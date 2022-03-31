@@ -622,6 +622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterSettings: {fileID: 11400000, guid: fca694e7bf4633c4494a10a4862f3ed1, type: 2}
+  deadEffect: {fileID: 0}
 --- !u!195 &4668950930897803942
 NavMeshAgent:
   m_ObjectHideFlags: 0

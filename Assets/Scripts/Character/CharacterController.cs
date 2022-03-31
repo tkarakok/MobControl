@@ -34,6 +34,7 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    
     void ResetAgent(){
         transform.localScale = characterSettings.characterScale;
         _activeDestination = false;
@@ -134,9 +135,9 @@ public class CharacterController : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Tower"))
             {
+                gameObject.SetActive(false);
                 other.gameObject.GetComponent<TowerController>().CheckHealth();
                 ResetAgent();
-                gameObject.SetActive(false);
             }
         }
 

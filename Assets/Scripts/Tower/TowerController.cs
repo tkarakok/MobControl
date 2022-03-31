@@ -9,10 +9,11 @@ public class TowerController : MonoBehaviour
     public int smallEnemyCount, bigEnemyCount;
     public float enemyInstantiateSpeed;
     public Transform enemySpawnPoint;
+    public ParticleSystem hitEffect;
 
     TextMeshPro healthText;
 
-
+    
     private void Start()
     {
         healthText = transform.GetChild(0).GetComponent<TextMeshPro>();
@@ -24,15 +25,18 @@ public class TowerController : MonoBehaviour
         StartCoroutine(StartInstantiateEnemy());
     }
 
+
     public void CheckHealth()
     {
         health--;
+        hitEffect.Play();
         healthText.text = health.ToString();
         if (health <= 0)
         {
             if (GameManager.Instance.CheckGameOver())
             {
                 EventManager.Instance.EndGame();
+                gameObject.SetActive(false);
             }
             else
             {

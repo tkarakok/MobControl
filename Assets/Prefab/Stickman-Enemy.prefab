@@ -1756,6 +1756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterSettings: {fileID: 11400000, guid: 927750223d72912478ab69c564b9ba89, type: 2}
+  deadEffect: {fileID: 0}
 --- !u!136 &6888121637737551612
 CapsuleCollider:
   m_ObjectHideFlags: 0
