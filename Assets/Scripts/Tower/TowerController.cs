@@ -13,7 +13,7 @@ public class TowerController : MonoBehaviour
 
     TextMeshPro healthText;
 
-    
+
     private void Start()
     {
         healthText = transform.GetChild(0).GetComponent<TextMeshPro>();
@@ -32,7 +32,8 @@ public class TowerController : MonoBehaviour
         hitEffect.Play();
         healthText.text = health.ToString();
         if (health <= 0)
-        {
+        {   
+            UIManager.Instance.StartLevelProgressBarUpdate();
             if (GameManager.Instance.CheckGameOver())
             {
                 EventManager.Instance.EndGame();

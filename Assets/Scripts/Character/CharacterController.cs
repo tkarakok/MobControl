@@ -89,7 +89,7 @@ public class CharacterController : MonoBehaviour
         {
             if (other.CompareTag("Obstacle"))
             {
-                for (int i = 1; i < other.GetComponent<Obstacle>().value; i++)
+                for (int i = 0; i < other.GetComponent<Obstacle>().value; i++)
                 {
                     CharacterPoolManager.Instance.GetPlayer(characterSettings.big, transform);
                 }
@@ -109,6 +109,7 @@ public class CharacterController : MonoBehaviour
             if (other.gameObject.CompareTag("Enemy"))
             {
                 CheckCollision();
+                GameManager.Instance.PlusCoin();
                 ResetAgent();
             }
 
@@ -122,8 +123,8 @@ public class CharacterController : MonoBehaviour
             }
             else if (other.gameObject.CompareTag("Cannon"))
             {
-                gameObject.SetActive(false);
                 EventManager.Instance.GameOver();
+                gameObject.SetActive(false);
             }
         }
 
@@ -135,9 +136,10 @@ public class CharacterController : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Tower"))
             {
-                gameObject.SetActive(false);
+                GameManager.Instance.PlusRock();
                 other.gameObject.GetComponent<TowerController>().CheckHealth();
                 ResetAgent();
+                gameObject.SetActive(false);
             }
         }
 

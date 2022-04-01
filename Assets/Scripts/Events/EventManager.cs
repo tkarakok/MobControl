@@ -15,6 +15,7 @@ public class EventManager : Singleton<EventManager>
     private void Awake()
     {
         MainMenu += SubscribeAllEvent;
+        MainMenu += UIManager.Instance.MainMenuUIUpdate;
         MainMenu();
     }
 
@@ -22,6 +23,9 @@ public class EventManager : Singleton<EventManager>
     {
         #region InGame
         InGame += () => StateManager.Instance.state = State.InGame;
+        InGame += UIManager.Instance.InGameCoinUpdate;
+        InGame += UIManager.Instance.InGameRockUpdate;
+        InGame += () => EventManager.Instance.CannonMove();
         #endregion
 
         #region CannonMove
@@ -33,13 +37,18 @@ public class EventManager : Singleton<EventManager>
         #region GameOver
         GameOver += () => StateManager.Instance.state = State.GameOver;
         GameOver += GameManager.Instance.ActiveAllCharactersDestroy;
+        GameOver += UIManager.Instance.GameOver;
         #endregion
 
         #region EndGame
         EndGame += () => StateManager.Instance.state = State.EndGame;
         EndGame += GameManager.Instance.ActiveAllCharactersDestroy;
+        EndGame += GameManager.Instance.SaveRockAndCoin;
+        EndGame += LevelManager.Instance.NextLevel;
+        EndGame += UIManager.Instance.EndGame;
         #endregion
 
+        
     }
 
 }

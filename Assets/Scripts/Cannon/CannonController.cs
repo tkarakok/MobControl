@@ -18,7 +18,6 @@ public class CannonController : Singleton<CannonController>
     private void Start()
     {
         ResetBoostImageAmount();
-        EventManager.Instance.CannonMove();
     }
 
     private void Update()
@@ -86,7 +85,7 @@ public class CannonController : Singleton<CannonController>
         });
     }
 
-    #region CANNON POSİTİON
+    #region Cannon Position
     public void MoveNewCannonPosition()
     {
         _currentCannonPosition++;

@@ -13,11 +13,16 @@ public class GameManager : Singleton<GameManager>
     List<GameObject> activeCharacters = new List<GameObject>();
     Transform _target;
     int _currentTarget = -1;
+    int _currentCoin;
+    int _currentRock;
 
+    
     #region Capsullation
     public Transform Target { get => _target; set => _target = value; }
     public List<GameObject> ActiveCharacters { get => activeCharacters; set => activeCharacters = value; }
     public int CurrentTarget { get => _currentTarget; set => _currentTarget = value; }
+    public int CurrentCoin { get => _currentCoin; set => _currentCoin = value; }
+    public int CurrentRock { get => _currentRock; set => _currentRock = value; }
     #endregion
 
     #region Check Game Over
@@ -60,6 +65,21 @@ public class GameManager : Singleton<GameManager>
         {
             activeCharacters[i].SetActive(false);
         }
+    }
+    #endregion
+
+    #region Coin And Rock
+    public void PlusCoin(){
+        CurrentCoin++;
+        UIManager.Instance.InGameCoinUpdate();
+    }
+    public void PlusRock(){
+        CurrentRock++;
+        UIManager.Instance.InGameRockUpdate();
+    }
+    public void SaveRockAndCoin(){
+        PlayerPrefs.SetInt("Coin", (PlayerPrefs.GetInt("Coin") + CurrentCoin));
+        PlayerPrefs.SetInt("Rock", (PlayerPrefs.GetInt("Rock") + CurrentRock));
     }
     #endregion
 }

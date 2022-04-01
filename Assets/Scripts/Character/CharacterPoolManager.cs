@@ -33,8 +33,6 @@ public class CharacterPoolManager : Singleton<CharacterPoolManager>
         }
     }
 
-    
-
     #region GetCaharcter Func
     /// <summary>
     /// get object for battle in queue
@@ -58,7 +56,7 @@ public class CharacterPoolManager : Singleton<CharacterPoolManager>
         }
 
         player.SetActive(true);
-        player.transform.position = position.position;
+        player.transform.position = position.position + new Vector3(0,0,.25f);
         player.GetComponent<Rigidbody>().AddForce(Vector3.forward * GameManager.Instance.forceSpeedForPlayer);
         characters[index].queue.Enqueue(player);
         GameManager.Instance.ActiveCharacters.Add(player);

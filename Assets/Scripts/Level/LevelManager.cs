@@ -14,7 +14,11 @@ public class LevelManager : Singleton<LevelManager>
     {
         ChangeLevel("LEVEL " + GetLevelName());
     }
-   
+    
+    public void NextLevel(){
+        PlayerPrefs.SetInt("Level", CurrentLevel);
+    }
+
     public int GetLevelName()
     {
         CurrentLevel = (PlayerPrefs.GetInt("Level") + 1);
