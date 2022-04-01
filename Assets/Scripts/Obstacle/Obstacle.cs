@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
+    #region Public Fields
     public int value;
     public bool moveable;
-
-
+    #endregion
+        
+    #region Private Fields
     private float _speed = 1;
-    private float _amount = 1;
-
+    private float _amount = 2;
+    #endregion
+        
 
     private void Start() {
         if (moveable)

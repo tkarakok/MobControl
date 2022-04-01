@@ -1,18 +1,23 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class TowerController : MonoBehaviour
 {
+
+    #region Public Fields
     public int health;
     public int smallEnemyCount, bigEnemyCount;
     public float enemyInstantiateSpeed;
     public Transform enemySpawnPoint;
     public ParticleSystem hitEffect;
+    #endregion
 
+    #region Private Fields
     TextMeshPro healthText;
-
+    #endregion
+        
 
     private void Start()
     {
@@ -25,14 +30,15 @@ public class TowerController : MonoBehaviour
         StartCoroutine(StartInstantiateEnemy());
     }
 
-
+    // we check tower health when agent hits a tower
     public void CheckHealth()
     {
         health--;
+        transform.DOShakePosition(.25f, new Vector3(.2f, 0, .2f), 5);
         hitEffect.Play();
         healthText.text = health.ToString();
         if (health <= 0)
-        {   
+        {
             UIManager.Instance.StartLevelProgressBarUpdate();
             if (GameManager.Instance.CheckGameOver())
             {
@@ -47,7 +53,7 @@ public class TowerController : MonoBehaviour
         }
     }
 
-
+    // tower enemy wave func
     IEnumerator StartInstantiateEnemy()
     {
         while (gameObject.activeInHierarchy)

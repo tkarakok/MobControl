@@ -6,14 +6,19 @@ using UnityEngine.UI;
 
 public class CannonController : Singleton<CannonController>
 {
+    #region Public Fields
     public Transform animatedObject, targetPoint, backPoint;
     public Image cannonBoostImage;
     public List<Transform> cannonPoints;
     public GameObject cannonBody;
+    #endregion
 
+    #region Private Fields
     private float _timer;
     private float _xSpeed = 25;
     private int _currentCannonPosition = -1;
+    #endregion
+
 
     private void Start()
     {
@@ -89,6 +94,7 @@ public class CannonController : Singleton<CannonController>
     public void MoveNewCannonPosition()
     {
         _currentCannonPosition++;
+        Debug.Log(_currentCannonPosition);
         if (_currentCannonPosition <= cannonPoints.Count)
         {
             transform.DOMove(cannonPoints[_currentCannonPosition].position, 2).OnComplete(
@@ -96,17 +102,18 @@ public class CannonController : Singleton<CannonController>
                 {
                     StateManager.Instance.state = State.InGame;
                     GameManager.Instance.ChangeTarget();
-                    cannonBody.transform.DORotate(new Vector3(0,90,0),.5f);
+                    cannonBody.transform.DORotate(new Vector3(0, 90, 0), .5f);
                 }
             );
         }
     }
 
-    
 
-    public void RotateCannonBody(){
-    
-        cannonBody.transform.DORotate(new Vector3(0,0,0),.5f).OnComplete(MoveNewCannonPosition);
+
+    public void RotateCannonBody()
+    {
+
+        cannonBody.transform.DORotate(new Vector3(0, 0, 0), .5f).OnComplete(MoveNewCannonPosition);
     }
     #endregion
 }

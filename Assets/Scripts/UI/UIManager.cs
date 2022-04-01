@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIManager : Singleton<UIManager>
 {
+    #region Public Fields
     [Header("Panels")]
     public GameObject mainMenuPanel;
     public GameObject inGamePanel;
@@ -22,8 +24,12 @@ public class UIManager : Singleton<UIManager>
     public Text endGameCoinText;
     public Text endGameRockText;
 
+    #endregion
 
+    #region Private Fields
     private GameObject _currentPanel;
+    #endregion
+        
 
     private void Start()
     {
@@ -89,19 +95,16 @@ public class UIManager : Singleton<UIManager>
         inGameRockText.text = GameManager.Instance.CurrentRock.ToString();
     }
 
-    public void StartLevelProgressBarUpdate(){
+    public void StartLevelProgressBarUpdate()
+    {
         levelProgressBar.gameObject.SetActive(true);
         StartCoroutine(LevelProgressUpdate());
     }
 
     IEnumerator LevelProgressUpdate()
     {
-        for (int i = 0; i < 20; i++)
-        {
-            levelProgressBar.value += .05f;
-            yield return new WaitForSeconds(.05f);
-        }
-        yield return new WaitForSeconds(.5f);
+        levelProgressBar.DOValue(levelProgressBar.value + 1, 1);
+        yield return new WaitForSeconds(2);
         levelProgressBar.gameObject.SetActive(false);
 
     }

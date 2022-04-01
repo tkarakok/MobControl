@@ -7,9 +7,12 @@ public class CharacterController : MonoBehaviour
 {
     public CharacterSettings characterSettings;
 
+    #region Private Fields
     int _triggerCounter;
     NavMeshAgent _agent;
     bool _activeDestination;
+    #endregion
+        
 
     void Start()
     {
@@ -34,13 +37,14 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    
+    // if agent player kill on scene we'll reset agent fields
     void ResetAgent(){
         transform.localScale = characterSettings.characterScale;
         _activeDestination = false;
     }
 
     #region Target Check
+    // find target func for agent
     public Transform CheckTarget()
     {
         if (characterSettings.chracterType == ChracterType.player)
